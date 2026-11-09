@@ -1,0 +1,106 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #111; font-family: "Segoe UI", Roboto, Arial, sans-serif; color: #fff; user-select: none; }
+#game { position: fixed; inset: 0; }
+#game canvas { display: block; }
+.hidden { display: none !important; }
+
+/* ---------- HUD ---------- */
+#hud { position: fixed; inset: 0; pointer-events: none; }
+#crosshair { position: absolute; left: 50%; top: 50%; width: 0; height: 0; }
+#crosshair .ch { position: absolute; background: #3cff6e; box-shadow: 0 0 2px #000; }
+#crosshair .t, #crosshair .b { width: 2px; height: 7px; left: -1px; }
+#crosshair .l, #crosshair .r { height: 2px; width: 7px; top: -1px; }
+#hitmarker { position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px; opacity: 0;
+  background:
+    linear-gradient(45deg, transparent 45%, #fff 45%, #fff 55%, transparent 55%),
+    linear-gradient(-45deg, transparent 45%, #fff 45%, #fff 55%, transparent 55%);
+  -webkit-mask: radial-gradient(circle, transparent 5px, #000 6px); mask: radial-gradient(circle, transparent 5px, #000 6px);
+  transition: opacity .15s; }
+#hitmarker.head { background:
+    linear-gradient(45deg, transparent 45%, #ff3b3b 45%, #ff3b3b 55%, transparent 55%),
+    linear-gradient(-45deg, transparent 45%, #ff3b3b 45%, #ff3b3b 55%, transparent 55%); }
+#scope { position: absolute; inset: 0;
+  background: radial-gradient(circle at center, transparent 0, transparent 34vh, #000 34.3vh);
+}
+#scope::before, #scope::after { content: ""; position: absolute; background: #000; }
+#scope::before { left: 0; right: 0; top: 50%; height: 1px; }
+#scope::after { top: 0; bottom: 0; left: 50%; width: 1px; }
+#damage-flash { position: absolute; inset: 0; background: radial-gradient(circle, transparent 40%, rgba(200,0,0,.55)); opacity: 0; transition: opacity .3s; }
+
+#topbar { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; }
+.team-score { display: flex; align-items: center; gap: 8px; padding: 4px 12px; background: rgba(0,0,0,.55); border-radius: 4px; font-size: 26px; font-weight: 700; min-width: 110px; }
+.team-score small { font-size: 11px; letter-spacing: 1px; opacity: .8; }
+.team-score.t { color: #f2b54a; justify-content: flex-end; }
+.team-score.ct { color: #6fb3ff; }
+#round-timer { background: rgba(0,0,0,.7); padding: 4px 14px; border-radius: 4px; font-size: 26px; font-weight: 700; min-width: 90px; text-align: center; }
+#round-timer.bomb { color: #ff4040; }
+#alive-row { position: absolute; top: 52px; left: 50%; transform: translateX(-50%); display: flex; gap: 110px; font-size: 13px; font-weight: 600; text-shadow: 0 1px 3px #000; }
+#alive-t { color: #f2b54a; } #alive-ct { color: #6fb3ff; }
+
+#radar { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.25); border-radius: 6px; }
+#killfeed { position: absolute; top: 10px; right: 10px; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
+.kf { background: rgba(0,0,0,.6); padding: 4px 10px; border-radius: 3px; font-size: 14px; white-space: nowrap; }
+.kf.me { border: 1px solid #e33; }
+.kf .T { color: #f2b54a; } .kf .CT { color: #6fb3ff; } .kf .w { color: #ccc; margin: 0 6px; font-size: 12px; }
+.kf .hs { color: #ff5555; font-size: 11px; margin-right: 4px; }
+
+#center-msg { position: absolute; top: 22%; width: 100%; text-align: center; font-size: 38px; font-weight: 800; text-shadow: 0 2px 8px #000; letter-spacing: 1px; }
+#sub-msg { position: absolute; top: calc(22% + 50px); width: 100%; text-align: center; font-size: 18px; text-shadow: 0 1px 4px #000; opacity: .9; }
+#progress { position: absolute; top: 62%; left: 50%; transform: translateX(-50%); width: 260px; height: 14px; background: rgba(0,0,0,.6); border: 1px solid #aaa; border-radius: 3px; }
+#progress-bar { height: 100%; width: 0; background: #ffcf3a; }
+#progress-label { position: absolute; top: -22px; width: 100%; text-align: center; font-size: 14px; }
+
+#bottom-left { position: absolute; left: 14px; bottom: 14px; display: flex; gap: 10px; }
+.stat { background: rgba(0,0,0,.55); padding: 6px 14px; border-radius: 4px; font-size: 30px; font-weight: 700; display: flex; gap: 8px; align-items: center; }
+.stat .ico { font-size: 20px; opacity: .8; }
+.stat.money { color: #7dff7d; font-size: 24px; }
+#bottom-right { position: absolute; right: 14px; bottom: 14px; text-align: right; }
+#weapon-name { font-size: 15px; opacity: .85; margin-bottom: 2px; }
+#ammo { background: rgba(0,0,0,.55); padding: 4px 14px; border-radius: 4px; font-size: 34px; font-weight: 700; display: inline-block; }
+#ammo small { font-size: 18px; opacity: .75; }
+#ammo.low #ammo-mag { color: #ff4b4b; }
+#slots { margin-top: 6px; display: flex; flex-direction: column; gap: 2px; align-items: flex-end; font-size: 12px; }
+#slots div { background: rgba(0,0,0,.45); padding: 2px 8px; border-radius: 3px; opacity: .6; }
+#slots div.active { opacity: 1; border-left: 3px solid #ffcf3a; }
+#spectating { position: absolute; bottom: 90px; width: 100%; text-align: center; font-size: 16px; text-shadow: 0 1px 3px #000; }
+
+/* ---------- Buy menu ---------- */
+#buy-menu { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(720px, 94vw); background: rgba(12,16,22,.93); border: 1px solid #445; border-radius: 8px; padding: 18px; }
+#buy-menu h2 { font-size: 20px; margin-bottom: 12px; }
+#buy-menu h2 small { font-size: 12px; opacity: .6; font-weight: 400; }
+#buy-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
+.buy-item { background: #1d2430; border: 1px solid #333c4a; border-radius: 5px; padding: 8px 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+.buy-item:hover { background: #2a3445; border-color: #ffcf3a; }
+.buy-item.no { opacity: .4; cursor: not-allowed; }
+.buy-item.owned { border-color: #3cff6e; }
+.buy-item .k { color: #ffcf3a; font-weight: 700; margin-right: 6px; }
+.buy-item .p { color: #7dff7d; }
+.buy-item .cat { display: block; font-size: 11px; opacity: .55; }
+#buy-money { margin-top: 12px; text-align: right; font-size: 18px; color: #7dff7d; }
+
+/* ---------- Scoreboard ---------- */
+#scoreboard { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(640px, 94vw); background: rgba(10,12,16,.92); border-radius: 8px; padding: 16px; font-size: 14px; }
+#scoreboard h3 { margin: 8px 0 4px; }
+#scoreboard table { width: 100%; border-collapse: collapse; }
+#scoreboard td, #scoreboard th { padding: 4px 6px; text-align: left; }
+#scoreboard th { opacity: .6; font-weight: 400; font-size: 12px; }
+#scoreboard tr.dead { opacity: .45; }
+#scoreboard tr.me { background: rgba(255,207,58,.12); }
+#scoreboard .T { color: #f2b54a; } #scoreboard .CT { color: #6fb3ff; }
+
+/* ---------- Menu ---------- */
+#menu { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 30%, rgba(40,50,70,.85), rgba(5,6,10,.95)); z-index: 10; padding: 16px; }
+.menu-box { width: min(520px, 100%); text-align: center; }
+.menu-box h1 { font-size: 54px; letter-spacing: 6px; color: #ffcf3a; text-shadow: 0 3px 0 #7a5a00, 0 6px 20px #000; }
+.menu-box .tag { opacity: .7; margin-bottom: 22px; }
+.menu-section { margin: 14px 0; }
+.menu-section h3 { font-size: 14px; font-weight: 600; opacity: .8; margin-bottom: 6px; }
+.choices { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.choices button, #play-btn, #resume-btn { background: #1d2430; color: #fff; border: 1px solid #445; padding: 9px 18px; border-radius: 5px; cursor: pointer; font-size: 15px; }
+.choices button.sel { border-color: #ffcf3a; background: #3a3420; }
+#play-btn, #resume-btn { margin-top: 18px; font-size: 22px; font-weight: 800; padding: 12px 60px; background: #ffcf3a; color: #111; border: none; letter-spacing: 2px; }
+#play-btn:hover, #resume-btn:hover { background: #ffe07a; }
+#resume-btn { display: block; margin: 18px auto 0; }
+#sens { width: 220px; }
+.controls { margin-top: 24px; font-size: 13px; line-height: 1.8; opacity: .75; }
+.controls b { color: #ffcf3a; }

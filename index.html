@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kritik Bölge — Taktik FPS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game"></div>
+
+  <!-- HUD -->
+  <div id="hud" class="hidden">
+    <div id="crosshair">
+      <div class="ch t"></div><div class="ch b"></div><div class="ch l"></div><div class="ch r"></div>
+    </div>
+    <div id="hitmarker"></div>
+    <div id="scope" class="hidden"></div>
+    <div id="damage-flash"></div>
+
+    <div id="topbar">
+      <div class="team-score t"><span id="score-t">0</span><small>SALDIRI</small></div>
+      <div id="round-timer">1:55</div>
+      <div class="team-score ct"><small>SAVUNMA</small><span id="score-ct">0</span></div>
+    </div>
+    <div id="alive-row"><span id="alive-t"></span><span id="alive-ct"></span></div>
+
+    <canvas id="radar" width="200" height="200"></canvas>
+    <div id="killfeed"></div>
+    <div id="center-msg"></div>
+    <div id="sub-msg"></div>
+    <div id="progress" class="hidden"><div id="progress-bar"></div><span id="progress-label"></span></div>
+
+    <div id="bottom-left">
+      <div class="stat"><span class="ico">✚</span><span id="hp">100</span></div>
+      <div class="stat"><span class="ico">⛨</span><span id="armor">0</span></div>
+      <div class="stat money"><span>$</span><span id="money">800</span></div>
+    </div>
+    <div id="bottom-right">
+      <div id="weapon-name">Kestrel P9</div>
+      <div id="ammo"><span id="ammo-mag">12</span><small>/ <span id="ammo-res">48</span></small></div>
+      <div id="slots"></div>
+    </div>
+    <div id="spectating" class="hidden"></div>
+  </div>
+
+  <!-- Buy menu -->
+  <div id="buy-menu" class="hidden">
+    <h2>SATIN AL <small>(B ile kapat · 1-9 tuşları ile al)</small></h2>
+    <div id="buy-list"></div>
+    <div id="buy-money"></div>
+  </div>
+
+  <!-- Scoreboard -->
+  <div id="scoreboard" class="hidden"></div>
+
+  <!-- Main menu -->
+  <div id="menu">
+    <div class="menu-box">
+      <h1>KRİTİK BÖLGE</h1>
+      <p class="tag">5v5 taktik nişancı · bomba kur / imha et</p>
+
+      <div class="menu-section">
+        <h3>Takım</h3>
+        <div class="choices" id="team-choice">
+          <button data-team="T" class="sel">Saldırı (T)</button>
+          <button data-team="CT">Savunma (CT)</button>
+        </div>
+      </div>
+      <div class="menu-section">
+        <h3>Bot Zorluğu</h3>
+        <div class="choices" id="diff-choice">
+          <button data-diff="0">Kolay</button>
+          <button data-diff="1" class="sel">Normal</button>
+          <button data-diff="2">Zor</button>
+        </div>
+      </div>
+      <div class="menu-section">
+        <h3>Fare Hassasiyeti: <span id="sens-val">1.0</span></h3>
+        <input type="range" id="sens" min="0.2" max="3" step="0.1" value="1">
+      </div>
+
+      <button id="play-btn">OYNA</button>
+      <button id="resume-btn" class="hidden">DEVAM ET</button>
+
+      <div class="controls">
+        <b>WASD</b> hareket · <b>Fare</b> nişan · <b>Sol tık</b> ateş · <b>Sağ tık</b> dürbün<br>
+        <b>Space</b> zıpla · <b>Ctrl/C</b> çömel · <b>Shift</b> yürü (sessiz) · <b>R</b> şarjör<br>
+        <b>1/2/3/4/5</b> silah seç · <b>Q</b> son silah · <b>G</b> bomba at (HE)<br>
+        <b>B</b> satın al · <b>E</b> bomba kur / imha et · <b>Tab</b> skor tablosu · <b>Esc</b> duraklat
+      </div>
+    </div>
+  </div>
+
+  <script src="vendor/three.min.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/weapons.js"></script>
+  <script src="js/entities.js"></script>
+  <script src="js/bots.js"></script>
+  <script src="js/hud.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
