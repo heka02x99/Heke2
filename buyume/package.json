@@ -1,0 +1,16 @@
+{
+  "name": "hucre-savasi",
+  "version": "1.0.0",
+  "description": "Hücre Savaşı — otomatik büyüyen hücrelerle çevrimiçi oyun sunucusu",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

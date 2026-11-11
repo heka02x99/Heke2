@@ -13,6 +13,7 @@
     <div id="stats">
       <div class="big"><span id="mass">20</span> <small>kütle</small></div>
       <div class="grow">⬆ Otomatik büyüme: <b id="grow-rate">+2.5</b>/sn</div>
+      <div class="small" id="mode"></div>
       <div class="small">Parça: <span id="pieces">1</span> · Yenen: <span id="kills">0</span> · Süre: <span id="time">0:00</span></div>
     </div>
     <div id="leaderboard"><h3>Liderler</h3><ol id="lb-list"></ol></div>
@@ -28,7 +29,9 @@
       <h1>Hücre<span>Savaşı</span></h1>
       <p class="tag">Oyuna girdiğin anda hücren <b>kendiliğinden büyümeye</b> başlar. Bölündüğünde her parça ayrı ayrı büyür!</p>
       <input id="name" maxlength="14" placeholder="Adın" autocomplete="off">
-      <button id="play" type="button">OYNA</button>
+      <button id="play-online" type="button" disabled>ÇEVRİMİÇİ OYNA</button>
+      <button id="play-offline" type="button" class="secondary">TEK KİŞİLİK (BOTLARA KARŞI)</button>
+      <div id="status">Sunucu kontrol ediliyor…</div>
       <div class="help">
         <div><kbd>Fare</kbd> Yön</div>
         <div><kbd>Space</kbd> Bölün</div>
@@ -47,11 +50,13 @@
         <div><b id="r-time">0:00</b><small>Hayatta kalma</small></div>
       </div>
       <button id="again" type="button">TEKRAR OYNA</button>
+      <button id="to-menu" type="button" class="secondary">ANA MENÜ</button>
     </div>
   </div>
 
   <div id="paused" class="overlay hidden"><div class="panel"><h2>Duraklatıldı</h2><p>Devam etmek için <kbd>P</kbd></p></div></div>
 
+  <script src="sim.js"></script>
   <script src="game.js"></script>
 </body>
 </html>

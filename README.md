@@ -4,7 +4,28 @@
 
 Hücreleri yiyerek büyüdüğün, tarayıcıda çalışan bir hücre oyunu. Farkı: **oyuna girdiğin anda hücren kendiliğinden büyümeye başlar** (parça başına +2.5 kütle/sn). Bölündüğünde her parça ayrı ayrı büyür, bu yüzden bölünmek hem saldırı hem büyüme taktiği olur. 500 kütlenin üstünde parçalar yavaşça erir, böylece büyüme sonsuza kadar sürmez. Kurallar botlar için de aynıdır.
 
-`buyume/index.html` dosyasını tarayıcıda aç, adını yaz ve **OYNA**'ya bas.
+### Çevrimiçi oynama (gerçek oyuncularla)
+
+Gereken: [Node.js](https://nodejs.org) 18 veya üstü.
+
+```bash
+cd buyume
+npm install
+npm start
+# Sunucu: http://localhost:3000
+```
+
+Tarayıcıda `http://localhost:3000` adresini aç, adını yaz ve **ÇEVRİMİÇİ OYNA**'ya bas. Aynı ağdaki arkadaşların `http://<bilgisayarının-IP-adresi>:3000` adresinden aynı oyuna katılabilir. İnternetten oynamak için sunucuyu Node.js çalıştırabilen herhangi bir yere (VPS, Render, Railway, Fly.io vb.) koyman yeterli. Sunucu `PORT` ortam değişkenini kullanır.
+
+- Sunucu yetkilidir: tüm oyun mantığı sunucuda çalışır, istemciler yalnızca fare yönünü ve bölünme/atma komutlarını gönderir. Böylece hile yapılamaz.
+- Oyuncu az olduğunda dünya botlarla doldurulur. Toplam 24 oyuncu hedeflenir; gerçek oyuncu katıldıkça botlar azalır, en az 6 bot kalır.
+- Ayarlar (ortam değişkenleri): `PORT` (varsayılan 3000), `MAX_PLAYERS` (60), `TOTAL_PLAYERS` (24), `MIN_BOTS` (6).
+- Oyun sayfası başka bir yerde, örneğin GitHub Pages'te barındırılıyorsa sunucu adresini adrese ekleyerek bağlanabilirsin: `.../buyume/?server=wss://sunucu-adresin`
+- GitHub Pages yalnızca statik dosya sunar, sunucuyu çalıştıramaz.
+
+### Tek kişilik
+
+`buyume/index.html` dosyasını doğrudan tarayıcıda açarsan (ya da sunucuya bağlanılamazsa) **TEK KİŞİLİK** düğmesiyle botlara karşı oynayabilirsin.
 
 | Kontrol | İşlev |
 | --- | --- |
@@ -17,6 +38,12 @@ Hücreleri yiyerek büyüdüğün, tarayıcıda çalışan bir hücre oyunu. Far
 - Mor dikenli mayınlar: küçükken arkasına saklanabilirsin, büyükken çarparsan parçalara ayrılırsın.
 - 24 bot: büyüklerden kaçar, küçükleri kovalar, fırsat bulunca bölünüp saldırır.
 - Liderlik tablosu, mini harita, telefon için dokunmatik düğmeler.
+
+```
+buyume/sim.js     Oyun simülasyonu (tarayıcı ve sunucu ortak kullanır)
+buyume/server.js  Çevrimiçi oyun sunucusu (WebSocket + statik dosyalar)
+buyume/game.js    İstemci: çizim, kontroller, ağ bağlantısı
+```
 
 ---
 
