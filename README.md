@@ -1,3 +1,25 @@
+# Heke2 Oyunları
+
+## Hücre Savaşı — Otomatik büyüyen hücreler (`buyume/`)
+
+Hücreleri yiyerek büyüdüğün, tarayıcıda çalışan bir hücre oyunu. Farkı: **oyuna girdiğin anda hücren kendiliğinden büyümeye başlar** (parça başına +2.5 kütle/sn). Bölündüğünde her parça ayrı ayrı büyür, bu yüzden bölünmek hem saldırı hem büyüme taktiği olur. 500 kütlenin üstünde parçalar yavaşça erir, böylece büyüme sonsuza kadar sürmez. Kurallar botlar için de aynıdır.
+
+`buyume/index.html` dosyasını tarayıcıda aç, adını yaz ve **OYNA**'ya bas.
+
+| Kontrol | İşlev |
+| --- | --- |
+| Fare / dokunma | Yön |
+| Space / BÖL | Bölünme (36+ kütle, en fazla 16 parça) |
+| W / AT | Kütle atma (basılı tutulabilir) |
+| P / Esc | Duraklatma |
+
+- Senden en az %25 küçük hücreleri yiyebilirsin; büyükler de seni yer.
+- Mor dikenli mayınlar: küçükken arkasına saklanabilirsin, büyükken çarparsan parçalara ayrılırsın.
+- 24 bot: büyüklerden kaçar, küçükleri kovalar, fırsat bulunca bölünüp saldırır.
+- Liderlik tablosu, mini harita, telefon için dokunmatik düğmeler.
+
+---
+
 # Kritik Bölge — Tarayıcıda Taktik FPS
 
 CS2 tarzı, tarayıcıda çalışan 5v5 taktik nişancı oyunu. Three.js ile yazıldı; kurulum veya derleme gerekmez.

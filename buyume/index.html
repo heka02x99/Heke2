@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Hücre Savaşı — Otomatik Büyüme</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="world"></canvas>
+
+  <div id="hud" class="hidden">
+    <div id="stats">
+      <div class="big"><span id="mass">20</span> <small>kütle</small></div>
+      <div class="grow">⬆ Otomatik büyüme: <b id="grow-rate">+2.5</b>/sn</div>
+      <div class="small">Parça: <span id="pieces">1</span> · Yenen: <span id="kills">0</span> · Süre: <span id="time">0:00</span></div>
+    </div>
+    <div id="leaderboard"><h3>Liderler</h3><ol id="lb-list"></ol></div>
+    <canvas id="minimap" width="160" height="160"></canvas>
+    <div id="touch-buttons">
+      <button id="btn-eject" type="button">AT</button>
+      <button id="btn-split" type="button">BÖL</button>
+    </div>
+  </div>
+
+  <div id="menu" class="overlay">
+    <div class="panel">
+      <h1>Hücre<span>Savaşı</span></h1>
+      <p class="tag">Oyuna girdiğin anda hücren <b>kendiliğinden büyümeye</b> başlar. Bölündüğünde her parça ayrı ayrı büyür!</p>
+      <input id="name" maxlength="14" placeholder="Adın" autocomplete="off">
+      <button id="play" type="button">OYNA</button>
+      <div class="help">
+        <div><kbd>Fare</kbd> Yön</div>
+        <div><kbd>Space</kbd> Bölün</div>
+        <div><kbd>W</kbd> Kütle at</div>
+        <div><kbd>P</kbd> Duraklat</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dead" class="overlay hidden">
+    <div class="panel">
+      <h2>Yutuldun!</h2>
+      <div class="result">
+        <div><b id="r-max">0</b><small>En yüksek kütle</small></div>
+        <div><b id="r-kills">0</b><small>Yenen hücre</small></div>
+        <div><b id="r-time">0:00</b><small>Hayatta kalma</small></div>
+      </div>
+      <button id="again" type="button">TEKRAR OYNA</button>
+    </div>
+  </div>
+
+  <div id="paused" class="overlay hidden"><div class="panel"><h2>Duraklatıldı</h2><p>Devam etmek için <kbd>P</kbd></p></div></div>
+
+  <script src="game.js"></script>
+</body>
+</html>
